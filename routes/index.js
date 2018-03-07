@@ -38,12 +38,12 @@ function parseCommand (commandText) {
 }
 
 function generateTextfromTitles (moviesArray){
-	var responseText = '';
-	moviesArray.forEach(function (movie) {
-		var newLine = `We should watch ${movie.title}. ${movie.createdByName} wants to anyway.\n`;
-		responseText+=newLine;
-	})
-	return responseText
+  var responseText = '*We should watch:\n';
+  moviesArray.forEach(function (movie) {
+    var newLine = `_${movie.title}_ — ${movie.createdByName}\n`;
+    responseText+=newLine;
+  })
+  return responseText
 }
 
 /* GET home page. */
@@ -68,7 +68,7 @@ router.post('/weshouldwatch', function(req, res, next) {
 
 	/* Add movie to db*/
 	if(req.body.token === process.env.SLACK_SLASH_TOKEN && slashCommand.command ==='add'){
-		
+
 		movies.insert(addMovie(slashCommand.title,req.body.user_name,req.body.user_id),function (err,result){
 			 if(err) throw err;
 		})
@@ -95,8 +95,8 @@ router.post('/weshouldwatch', function(req, res, next) {
 		    }
 		    res.status(200).send(response);
 		});
-		
-		
+
+
 	}
 	else {
 		var response = {
